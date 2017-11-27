@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+$: << File.expand_path(File.expand_path("../../spec", __FILE__))
+
+require "bundler/setup"
+load Gem.bin_path("rspec-core", "rspec")
