@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Shiroyagi::VERSION
   s.authors     = ['Rui Onodera']
   s.email       = ['deraru@gmail.com']
-  s.homepage    = 'https://github.com/deraru/shiroyagi'
+  s.homepage    = 'https://github.com/Findy/shiroyagi'
   s.summary     = 'Read/Unread status management module for Rails.'
   s.description = 'Read/Unread status management module for Rails.'
   s.license     = 'MIT'
