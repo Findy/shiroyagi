@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     shiroyagi (1.0.0)
-      rails (>= 5.2.0)
+      rails (>= 5.1.4)
 
 GEM
   remote: https://rubygems.org/
