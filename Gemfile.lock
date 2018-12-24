@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     shiroyagi (1.0.1)
-      rails (>= 5.1.4)
+      rails (>= 5.2.2)
 
 GEM
   remote: https://rubygems.org/
@@ -151,7 +151,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activejob (~> 5.2.1)
   factory_bot_rails
   pry-byebug
   rspec-rails
