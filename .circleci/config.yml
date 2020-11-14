@@ -1,0 +1,78 @@
+version: 2.1
+
+executors:
+  working_directory: /root/shiroyagi
+  ruby_2_7:
+    docker:
+      - image: rubylang/ruby:2.7.2-bionic
+        auth:
+          username: $DOCKER_HUB_ACCESS_KEY
+          password: $DOCKER_HUB_SECRET_ACCESS_KEY
+  ruby_2_6:
+    docker:
+      - image: rubylang/ruby:2.6.6-bionic
+        auth:
+          username: $DOCKER_HUB_ACCESS_KEY
+          password: $DOCKER_HUB_SECRET_ACCESS_KEY
+  ruby_2_5:
+    docker:
+      - image: rubylang/ruby:2.5.8-bionic
+        auth:
+          username: $DOCKER_HUB_ACCESS_KEY
+          password: $DOCKER_HUB_SECRET_ACCESS_KEY
+
+commands:
+  install_system_dependencies:
+    description: "Install system dependencies"
+    steps:
+      - run:
+          name: Install System Dependencies
+          # https://circleci.com/docs/2.0/custom-images/#required-tools-for-primary-containers
+          command: apt-get update -y && apt-get install -y ssh libsqlite3-dev
+
+  bundle_gems:
+    description: "Bundle gems"
+    steps:
+      - run:
+          name: Bundle gems
+          command: |
+            gem install bundler -v 2.1.4 --no-document --force
+            bundle install
+  run_tests:
+    description: "Run tests"
+    steps:
+      - run:
+          name: Run tests
+          command: |
+            bin/rspec
+
+jobs:
+  run_tests_on_ruby_2_7:
+    executor: ruby_2_7
+    steps:
+      - install_system_dependencies
+      - checkout
+      - bundle_gems
+      - run_tests
+  run_tests_on_ruby_2_6:
+    executor: ruby_2_6
+    steps:
+      - install_system_dependencies
+      - checkout
+      - bundle_gems
+      - run_tests
+  run_tests_on_ruby_2_5:
+    executor: ruby_2_5
+    steps:
+      - install_system_dependencies
+      - checkout
+      - bundle_gems
+      - run_tests
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - run_tests_on_ruby_2_7
+      - run_tests_on_ruby_2_6
+      - run_tests_on_ruby_2_5
