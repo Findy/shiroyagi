@@ -4,7 +4,7 @@ FactoryBot.define do
     association :to_user, factory: :user, strategy: :build
 
     trait :with_read_at do
-      read_at Time.current
+      read_at { Time.current }
     end
 
     factory :read_message, traits: %i(with_read_at)
