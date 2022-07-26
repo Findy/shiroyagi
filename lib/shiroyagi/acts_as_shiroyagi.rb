@@ -4,15 +4,11 @@ module Shiroyagi
 
     class_methods do
       def acts_as_shiroyagi(options = {})
+        @read_management_column_name = options[:column].to_sym
       end
 
       def read_management_column_name
         @read_management_column_name || :read_at
-      end
-
-      # NOTE: call this method to change column that use read management
-      def read_management_column_name=(column_name)
-        @read_management_column_name = column_name.to_sym
       end
 
       def reads_count
