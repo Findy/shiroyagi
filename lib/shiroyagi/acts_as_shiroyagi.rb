@@ -37,28 +37,34 @@ module Shiroyagi
       scope :unreads, -> { where(read_management_column_name => nil) }
 
       def mark_as_read
-        update(self.class.read_management_column_name => Time.current) if unread?
+        update(read_management_column_name => Time.current) if unread?
       end
 
       def mark_as_unread
-        update(self.class.read_management_column_name => nil) if read?
+        update(read_management_column_name => nil) if read?
       end
 
       def mark_as_read!
-        update!(self.class.read_management_column_name => Time.current) if unread?
+        update!(read_management_column_name => Time.current) if unread?
       end
 
       def mark_as_unread!
-        update!(self.class.read_management_column_name => nil) if read?
+        update!(read_management_column_name => nil) if read?
       end
 
       def read?
-        send(self.class.read_management_column_name).present?
+        send(read_management_column_name).present?
       end
 
       def unread?
-        send(self.class.read_management_column_name).blank?
+        send(read_management_column_name).blank?
       end
+    end
+
+    private
+
+    def read_management_column_name
+      self.class.read_management_column_name
     end
   end
 end
