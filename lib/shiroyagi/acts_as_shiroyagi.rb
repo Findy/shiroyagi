@@ -4,7 +4,7 @@ module Shiroyagi
 
     class_methods do
       def acts_as_shiroyagi(options = {})
-        @read_management_column_name = options[:column].to_sym
+        @read_management_column_name = options[:column].to_sym if options[:column].present?
       end
 
       def read_management_column_name
