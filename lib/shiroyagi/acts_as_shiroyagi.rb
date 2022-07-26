@@ -53,11 +53,11 @@ module Shiroyagi
       end
 
       def read?
-        send(self.class.read_management_column_name).send('present?')
+        send(self.class.read_management_column_name).present?
       end
 
       def unread?
-        send(self.class.read_management_column_name).send('blank?')
+        send(self.class.read_management_column_name).blank?
       end
     end
   end
