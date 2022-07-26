@@ -6,9 +6,13 @@ module Shiroyagi
       def acts_as_shiroyagi(options = {})
       end
 
-      # NOTE: override this method change column to use read management
       def read_management_column_name
-        :read_at
+        @read_management_column_name || :read_at
+      end
+
+      # NOTE: call this method to change column that use read management
+      def read_management_column_name=(column_name)
+        @read_management_column_name = column_name.to_sym
       end
 
       def reads_count
