@@ -18,6 +18,16 @@ class Message < ApplicationRecord
 end
 ```
 
+If you want to use a different column, you can specify it with `acts_as_shiroyagi`
+
+```ruby
+class Message < ApplicationRecord
+  include Shiroyagi::ActsAsShiroyagi
+
+  acts_as_shiroyagi column: 'user_read_at'
+end
+```
+
 That's it! Then you can use the following methods.
 
 ```ruby
