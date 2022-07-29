@@ -3,8 +3,12 @@ module Shiroyagi
     extend ActiveSupport::Concern
 
     class_methods do
-      # TODO: The read_at column name should be customizable via an argument.
       def acts_as_shiroyagi(options = {})
+        @read_management_column_name = options[:column].to_sym if options[:column].present?
+      end
+
+      def read_management_column_name
+        @read_management_column_name || :read_at
       end
 
       def reads_count
@@ -16,41 +20,47 @@ module Shiroyagi
       end
 
       def mark_all_as_read
-        unreads.update(read_at: Time.current)
+        unreads.update(read_management_column_name => Time.current)
       end
 
       def mark_all_as_unread
-        reads.update(read_at: nil)
+        reads.update(read_management_column_name => nil)
       end
     end
 
     included do
-      scope :reads,   -> { where.not(read_at: nil) }
-      scope :unreads, -> { where(read_at: nil) }
+      scope :reads,   -> { where.not(read_management_column_name => nil) }
+      scope :unreads, -> { where(read_management_column_name => nil) }
 
       def mark_as_read
-        update(read_at: Time.current) if unread?
+        update(read_management_column_name => Time.current) if unread?
       end
 
       def mark_as_unread
-        update(read_at: nil) if read?
+        update(read_management_column_name => nil) if read?
       end
 
       def mark_as_read!
-        update!(read_at: Time.current) if unread?
+        update!(read_management_column_name => Time.current) if unread?
       end
 
       def mark_as_unread!
-        update!(read_at: nil) if read?
+        update!(read_management_column_name => nil) if read?
       end
 
       def read?
-        read_at.present?
+        send(read_management_column_name).present?
       end
 
       def unread?
-        read_at.blank?
+        send(read_management_column_name).blank?
       end
+    end
+
+    private
+
+    def read_management_column_name
+      self.class.read_management_column_name
     end
   end
 end
