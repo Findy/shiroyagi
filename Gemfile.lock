@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    shiroyagi (1.3.1)
+    shiroyagi (1.4.0)
       rails (>= 5.2.2)
 
 GEM
